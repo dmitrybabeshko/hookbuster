@@ -8,13 +8,13 @@ let fonts = {
         return chalk.greenBright('! ' + text)
     },
     info: (text) => {
-        return chalk.cyanBright('INFO: ' + text)
+        return chalk.black(chalk.blackBright('INFO: ') + text)
     },
     error: (text) => {
-        return (chalk.redBright('ERROR: ' + text))
+        return (chalk.red(chalk.redBright('ERROR: ') + text))
     },
     highlight: (text) => {
-        return (chalk.bgRed(text))
+        return (chalk.bgYellowBright(text))
     }
 };
 

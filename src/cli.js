@@ -53,20 +53,6 @@ const options = {
 };
 
 /**
- * Prints logo
- * */
-function welcome() {
-
-    const clear = require('clear');
-    const config = require('../package.json');
-    const logo = require('asciiart-logo');
-
-    clear();
-    console.log(logo(config).render());
-
-}
-
-/**
  * Prompts for access token in the console.
  *
  * @return Promise<String> either the answer or an error
@@ -259,10 +245,8 @@ function requestEvent(event_pool) {
 module.exports = {
     firehose_resource_names,
     options,
-    welcome,
     requestToken,
     requestPort,
     requestResource,
     requestEvent,
-    options
 };

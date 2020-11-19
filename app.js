@@ -1,6 +1,6 @@
 const listener = require('./src/listener');
 const cli = require('./src/cli');
-const {fonts } = require('./util/fonts');
+const {fonts} = require('./util/fonts');
 
 let specs = {
     access_token: '',
@@ -29,7 +29,7 @@ function gatherSpecs() {
 
         listener.verifyAccessToken(token).then((person) => {
 
-            console.log(fonts.info(`token authenticated as ${person.displayName}`));
+            console.log(fonts.info(`Token authenticated as ${fonts.highlight(person.displayName)}`));
             specs.access_token = token;
             gatherPort();
 
@@ -77,7 +77,7 @@ function gatherResource() {
         if (Array.isArray(resource)) {
             // user selected "all"
             specs.selection.event = 'all';
-            for (let resource_name of resource) { 
+            for (let resource_name of resource) {
                 listener.runListener(specs, cli.options[resource_name]);
             }
             return;
@@ -116,24 +116,27 @@ function gatherEvent(resource) {
     });
 }
 
+{
+    specs.access_token = process.env.HOOKBUSTER_TOKEN;
+    specs.port = parseInt(process.env.HOOKBUSTER_PORT);
+    console.log(fonts.info('HOOKBUSTER_TOKEN: ' + fonts.highlight(specs.access_token)));
+    console.log(fonts.info('HOOKBUSTER_PORT: ' + fonts.highlight(specs.port)));
 
-if ((process.env.TOKEN) && (process.env.PORT)) {
-    specs.port = parseInt(process.env.PORT);
-    specs.access_token = process.env.TOKEN;
-    listener.verifyAccessToken(process.env.TOKEN).then((person) => {
-        console.log(fonts.info(`token authenticated as ${person.displayName}`));
-        specs.selection.event = 'all';
-        for (let resource_object of cli.firehose_resource_names) { 
-            listener.runListener(specs, cli.options[resource_object]);
-        }
+    if ((specs.port) && (specs.access_token)) {
+        listener.verifyAccessToken(specs.access_token).then((person) => {
+            console.log(fonts.info(`Token authenticated as ${fonts.highlight(person.displayName)}`));
+            specs.selection.event = 'all';
+            for (let resource_object of cli.firehose_resource_names) {
+                listener.runListener(specs, cli.options[resource_object]);
+            }
         }).catch(reason => {
             //token not authorized
             console.log(fonts.error(reason));
             process.exit(-1);
-      });
-} else {
-    cli.welcome();
-    gatherSpecs();
+        });
+    } else {
+        gatherSpecs();
+    }
 }
 
 
