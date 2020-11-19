@@ -120,7 +120,7 @@ function gatherEvent(resource) {
     specs.access_token = process.env.HOOKBUSTER_TOKEN;
     specs.port = parseInt(process.env.HOOKBUSTER_PORT);
     console.log(fonts.info('HOOKBUSTER_TOKEN: ' + fonts.highlight(specs.access_token)));
-    console.log(fonts.info('HOOKBUSTER_PORT: ' + fonts.highlight(specs.port)));
+    console.log(fonts.info('HOOKBUSTER_PORT: ' + fonts.highlight(process.env.HOOKBUSTER_PORT)));
 
     if ((specs.port) && (specs.access_token)) {
         listener.verifyAccessToken(specs.access_token).then((person) => {
