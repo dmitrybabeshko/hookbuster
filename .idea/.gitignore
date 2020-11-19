@@ -1,13 +1,7 @@
-# Default ignored files
 /shelf/
-/workspace.xml
 /sonarlint/
 /inspectionProfiles/
 /copyright/
 /codeStyles/
-compiler.xml
-misc.xml
-validation.xml
-externalDependencies.xml
-modules.xml
-vcs.xml
+workspace.xml
+dictionaries
